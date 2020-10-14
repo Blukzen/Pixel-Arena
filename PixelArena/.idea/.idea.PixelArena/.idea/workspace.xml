@@ -36,15 +36,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="194977c8-8968-4056-a5f6-76563cce45cb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Binaries/Win64/UE4Editor.modules" beforeDir="false" afterPath="$PROJECT_DIR$/Binaries/Win64/UE4Editor.modules" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/PixelArena/UI/UIGameOver.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/PixelArena/Blueprints/ArenaCharacterBaseBP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PixelArena/Blueprints/ArenaCharacterBaseBP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/PixelArena/Blueprints/LongrangeBossBasic.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PixelArena/Blueprints/LongrangeBossBasic.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/PixelArena/Game/PixelArenaGameInstance.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PixelArena/Game/PixelArenaGameInstance.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/PixelArena/Levels/Main.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PixelArena/Levels/Main.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/PixelArena/Tilemaps/MainMap.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PixelArena/Tilemaps/MainMap.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/PixelArenaEditor/ActionHistory.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/PixelArenaEditor/ActionHistory.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/PixelArenaEditor/Development/Metadata-HotReload.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/PixelArenaEditor/Development/Metadata-HotReload.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Saved/Config/Windows/Game.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Saved/Config/Windows/Game.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/PixelArena/Game/PixelArenaGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PixelArena/Game/PixelArenaGameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/PixelArena/UI/UIPause.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PixelArena/UI/UIPause.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

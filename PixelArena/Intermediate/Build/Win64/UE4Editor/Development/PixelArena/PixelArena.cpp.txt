@@ -1,2 +1,0 @@
-D:\Projects\Pixel-Arena\PixelArena\Intermediate\Build\Win64\UE4Editor\Development\PixelArena\Definitions.PixelArena.h
-D:\Projects\Pixel-Arena\PixelArena\Source\PixelArena\PixelArena.h

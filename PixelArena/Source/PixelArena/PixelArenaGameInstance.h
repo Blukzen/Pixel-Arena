@@ -18,6 +18,6 @@ class PIXELARENA_API UPixelArenaGameInstance : public UGameInstance
 
 	public:
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Pixel Arena")
-		TSubclassOf<class AArenaCharacter> CharacterClass;
+		TSubclassOf<class AArenaCharacter> CharacterClass; // Current selected class
 	
 };

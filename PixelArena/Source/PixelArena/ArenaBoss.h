@@ -13,6 +13,9 @@
 #include "ArenaBoss.generated.h"
 
 
+/**
+ * Boss State Types
+ */
 UENUM(BlueprintType)
 enum BossState {
 	BossIdle UMETA(DisplayName = "Boss Idle"),
@@ -29,19 +32,18 @@ public:
 	AArenaBoss();
 
 	// Properties
-	
 	UPROPERTY(EditAnywhere, Category = ARENA_BOSS) float AttackSpeed = 100; // Attack speed in milliseconds.
 	UPROPERTY(EditAnywhere, Category = ARENA_BOSS) UBoxComponent* VisionBox; // Size of the bosses vision box.
 	UPROPERTY(BlueprintReadWrite, Category = ARENA_BOSS) bool bPlayerVisible = false; // Whether the player is within the boss vision box.
-	UPROPERTY(BlueprintReadWrite, Category = ARENA_BOSS) TEnumAsByte<BossState> CurrentState = BossIdle;
-	UPROPERTY(BlueprintReadWrite, Category = ARENA_BOSS) AArenaActor* Character;
-
+	UPROPERTY(BlueprintReadWrite, Category = ARENA_BOSS) TEnumAsByte<BossState> CurrentState = BossIdle; // Bosses current state
+	UPROPERTY(BlueprintReadWrite, Category = ARENA_BOSS) AArenaActor* Character; // Reference to the current players character
 
 	// Events
 	UFUNCTION(BlueprintImplementableEvent, Category = ARENA_BOSS) void IdleState();
 	UFUNCTION(BlueprintImplementableEvent, Category = ARENA_BOSS) void AttackState();
 	UFUNCTION(BlueprintImplementableEvent, Category = ARENA_BOSS) void AbilityState();
 	UFUNCTION(BlueprintImplementableEvent, Category =  ARENA_BOSS) void AnimationFinished();
+	
 	// Functions
 	UFUNCTION(BlueprintCallable, Category = ARENA_BOSS) virtual void Attack();
 	UFUNCTION(BlueprintCallable, Category =  ARENA_BOSS) virtual void Ability();

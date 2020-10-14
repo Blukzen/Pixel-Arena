@@ -119,6 +119,22 @@ void AArenaCharacter::Attack(AArenaActor* other, int damageModifier) {
     
     other->Damage(AttackDamage * FGenericPlatformMath::Pow(2, damageModifier));
 }
+/**
+ * Resets the character input values to their defaults
+ * TODO: Should use input map rather than strings for IsInputKeyDown
+ */
+void AArenaCharacter::ResetInput()
+{
+    const APlayerController* controller = GetWorld()->GetFirstPlayerController();
+
+    UpdateMovementInput(North, controller->IsInputKeyDown(FKey("W")));
+    UpdateMovementInput(West, controller->IsInputKeyDown(FKey("A")));
+    UpdateMovementInput(South, controller->IsInputKeyDown(FKey("S")));
+    UpdateMovementInput(East, controller->IsInputKeyDown(FKey("D")));
+
+    UpdateAbilityInput(false);
+    UpdateAttackInput(false);
+}
 
 /**
  * Updates the movement map and decides whether the character is moving or not

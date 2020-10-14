@@ -60,6 +60,7 @@ class PIXELARENA_API AArenaCharacter : public AArenaActor
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void SetHitbox(TEnumAsByte<Direction> direction, UBoxComponent* hitbox);
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void BeginAttack(TEnumAsByte<Direction> direction);
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void Attack(AArenaActor* other, int damageModifier);
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void ResetInput();
 
 		// Events
 		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void IdleState();

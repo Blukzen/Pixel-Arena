@@ -21,19 +21,13 @@ public:
 	// Sets default values for this actor's properties
 	AArenaProjectile();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:
 	// Properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile) int Damage; // Amount of damage this projectile deals.
 
 	// Events
-	UFUNCTION(BlueprintImplementableEvent, Category = Projectile) void Fire(FVector direction);
+	UFUNCTION(BlueprintImplementableEvent, Category = Projectile) void Fire(FVector direction); // Event called when the projectile should begin to shoot/move.
 	
 	// Functions
-	virtual void Tick(float DeltaTime) override;
 	void FireAtPlayer();
 
 

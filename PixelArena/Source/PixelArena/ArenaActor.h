@@ -19,10 +19,10 @@ class PIXELARENA_API AArenaActor : public APaperCharacter
 
 	public:
 		// Properties
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Arena_Actor) int MaxHealth;
-		UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Arena_Actor) int Health;
-		UPROPERTY(EditAnywhere, Category = Arena_Actor) int AttackDamage;
-		UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Arena_Actor) bool CanDamage = true;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Arena_Actor) int MaxHealth; // Actors Max health
+		UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Arena_Actor) int Health; // Actors Current health
+		UPROPERTY(EditAnywhere, Category = Arena_Actor) int AttackDamage; // Actors damage stat
+		UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Arena_Actor) bool CanDamage = true; // Whether or not the actor can currently be damaged
 	
 		// Functions
 		UFUNCTION(BlueprintCallable, Category = Arena_Actor) virtual void Damage(int amount);

@@ -7,54 +7,33 @@
 static FDateTime InputReleaseTime = -1; // The time used to tell weather a key has been released
 
 /**
- * ArenaCharacter constructor
+ * ArenaCharacter constructor.
  * - Sets up input map
- * - Registers onfinished playing event
+ * - Registers on finished playing event
  */
 AArenaCharacter::AArenaCharacter()
 {
-    // Setup Movement Input Map
+    // Setup Movement Input Map.
     MoveInputMap.Add(North, InputReleaseTime);
     MoveInputMap.Add(East, InputReleaseTime);
     MoveInputMap.Add(South, InputReleaseTime);
     MoveInputMap.Add(West, InputReleaseTime);
 
+    // Register flipbook finished playing callback.
     GetSprite()->OnFinishedPlaying.AddDynamic(this, &AArenaCharacter::AnimationFinished);
 }
 
 /**
- * Applies velocity based on the characters current MoveDirection.
+ * Moves character in current MoveDirection at the characters MoveSpeed.
  */
 void AArenaCharacter::Move()
 {
-    switch (MoveDirection)
-    {
-        case North:
-            Velocity = FVector(0, 0, MoveSpeed);
-            break;
-        case East:
-            Velocity = FVector(MoveSpeed, 0, 0);
-            break;
-        case South:
-            Velocity = FVector(0, 0, -MoveSpeed);
-            break;
-        case West:
-            Velocity = FVector(-MoveSpeed, 0, 0);
-        default:
-            break;
-    }
-}
-
-/**
- * TODO: Implement apply velocity
- * Does this have any use cases?
- */
-void AArenaCharacter::ApplyVelocity(float speed, Direction direction)
-{
+    SetVelocity(MoveSpeed, MoveDirection);
 }
 
 /**
  * Sets the characters current velocity to the given speed and applies it in the given direction.
+ * Used for Dashes etc.
  * @param speed Speed to apply.
  * @param direction Direction to apply speed.
  */
@@ -87,7 +66,7 @@ void AArenaCharacter::BeginAttack(TEnumAsByte<Direction> direction) {
 }
 
 /**
- * Blueprint event to fire once an attack has finished.
+ * Blueprint callable function to finish an attack.
  */
 void AArenaCharacter::FinishAttack()
 {
@@ -99,7 +78,7 @@ void AArenaCharacter::FinishAttack()
 }
 
 /**
- * Blueprint event to fire once an ability has finished.
+ * Blueprint callable function to fire once an ability has finished.
  */
 void AArenaCharacter::FinishAbility()
 {
@@ -107,7 +86,7 @@ void AArenaCharacter::FinishAbility()
     abilityDownTime = -1;
 }
 
-/*
+/**
 * Blueprint callable function to damage another arena actor.
 * @param other The arena actor to damage.
 * @param damageModifier Attack damage dealt is multiplied by this.
@@ -134,6 +113,14 @@ void AArenaCharacter::ResetInput()
 
     UpdateAbilityInput(false);
     UpdateAttackInput(false);
+}
+
+/**
+ * Resets the character ability cooldown
+ */
+void AArenaCharacter::ResetCooldown()
+{
+    abilityCooldownTime = -1;
 }
 
 /**
@@ -175,7 +162,6 @@ void AArenaCharacter::UpdateFacing()
     // Only update direction if we're actually moving
     if (bIsMoving)
     {
-        // TODO: Replace with Facing, Separate direction no longer needed
         MoveDirection = recent.Key;
         Facing = recent.Key;
     }
@@ -217,7 +203,7 @@ void AArenaCharacter::UpdateAbilityInput(bool active)
     }
 }
 
-/*
+/**
 * Sets the hitbox for the given direction
 * @param direction The direction the hitbox is for
 * @param hitbox The box component that makes the hitbox
@@ -229,14 +215,16 @@ void AArenaCharacter::SetHitbox(TEnumAsByte<Direction> direction, UBoxComponent*
 }
 
 /**
- * Main character state loop
+ * Main character state loop.
  */
 void AArenaCharacter::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
 
+    // Logic based on Characters current state.
     switch (CharacterState)
     {
+        // Idle state.
         case Idle:
             UpdateFacing();
             IdleState();
@@ -260,6 +248,8 @@ void AArenaCharacter::Tick(float DeltaSeconds)
                 break;
             }
             break;
+        
+        // Walking state.
         case Walking:
             UpdateFacing();
             WalkingState();
@@ -284,6 +274,8 @@ void AArenaCharacter::Tick(float DeltaSeconds)
                 break;
             }
             break;
+
+        // Attacking state.
         case Attacking:
             if (!bIsAttacking && bIsMoving)
             {
@@ -299,6 +291,8 @@ void AArenaCharacter::Tick(float DeltaSeconds)
             if (!attackStarted)
                 AttackState((FDateTime::Now() - attackDownTime).GetTotalMilliseconds(), attackKeyDown);
             break;
+
+        // Ability state.
         case Ability:
             if (!bIsAbility && bIsMoving)
             {

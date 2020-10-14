@@ -5,25 +5,18 @@
 
 #include "Kismet/GameplayStatics.h"
 
-// Sets default values
+/**
+ * Constructor.
+ */
 AArenaProjectile::AArenaProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-// Called when the game starts or when spawned
-void AArenaProjectile::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-// Called every frame
-void AArenaProjectile::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
+/**
+ * Fires a projectile at the direction of the character.
+ */
 void AArenaProjectile::FireAtPlayer()
 {
 	FVector playerLocation = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->GetActorLocation();

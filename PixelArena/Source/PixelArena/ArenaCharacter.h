@@ -43,49 +43,49 @@ class PIXELARENA_API AArenaCharacter : public AArenaActor
 		AArenaCharacter();
 
 		// Properties
-		UPROPERTY(EditAnywhere, Category="Arena Character") float MoveSpeed = 400;
-		UPROPERTY(EditAnywhere, Category="Arena Character") float AbilityCooldown = 200;
-		UPROPERTY(VisibleAnywhere, Category="Arena Character|State", BlueprintReadOnly) TEnumAsByte<CharacterState> CharacterState = Idle;
-		UPROPERTY(VisibleAnywhere, Category="Arena Character|State", BlueprintReadOnly) TEnumAsByte<Direction> Facing = South;
-		UPROPERTY(EditAnywhere, Category="Arena Character|Animations") TMap<TEnumAsByte<Direction>, UPaperFlipbook*> IdleAnimations;
-		UPROPERTY(EditAnywhere, Category="Arena Character|Animations") TMap<TEnumAsByte<Direction>, UPaperFlipbook*> WalkingAnimations;
-		UPROPERTY(BlueprintReadWrite, Category = "Arena Character|Hit Boxes") TMap<TEnumAsByte<Direction>, UBoxComponent*> AttackBoxes;
+		UPROPERTY(EditAnywhere, Category = "Arena Character") float MoveSpeed = 400; // The characters move/walk speed.
+		UPROPERTY(EditAnywhere, Category = "Arena Character") float AbilityCooldown = 200; // The length of the characters ability cooldown in ms.
+		UPROPERTY(VisibleAnywhere, Category = "Arena Character|State", BlueprintReadOnly) TEnumAsByte<CharacterState> CharacterState = Idle; // Characters current state.
+		UPROPERTY(VisibleAnywhere, Category = "Arena Character|State", BlueprintReadOnly) TEnumAsByte<Direction> Facing = South; // The direction the character is current facing.
+		UPROPERTY(EditAnywhere, Category = "Arena Character|Animations") TMap<TEnumAsByte<Direction>, UPaperFlipbook*> IdleAnimations; // Idle animations for the different directions.
+		UPROPERTY(EditAnywhere, Category = "Arena Character|Animations") TMap<TEnumAsByte<Direction>, UPaperFlipbook*> WalkingAnimations; // Walking animations for the different directions.
+		UPROPERTY(BlueprintReadWrite, Category = "Arena Character|Hit Boxes") TMap<TEnumAsByte<Direction>, UBoxComponent*> AttackBoxes; // The attack boxes for the different directions.
 
 		// Functions
-		UFUNCTION(BlueprintCallable, Category="Arena Character") void Move();
-		UFUNCTION(BlueprintCallable, Category="Arena Character") void ApplyVelocity(float speed, Direction direction);
-		UFUNCTION(BlueprintCallable, Category="Arena Character") void SetVelocity(float speed, Direction direction);
-		UFUNCTION(BlueprintCallable, Category="Arena Character") void FinishAttack();
-		UFUNCTION(BlueprintCallable, Category="Arena Character") void FinishAbility();
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void Move();
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void SetVelocity(float speed, Direction direction);
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void FinishAttack();
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void FinishAbility();
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void SetHitbox(TEnumAsByte<Direction> direction, UBoxComponent* hitbox);
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void BeginAttack(TEnumAsByte<Direction> direction);
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void Attack(AArenaActor* other, int damageModifier);
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void ResetInput();
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void ResetCooldown();
 
 		// Events
-		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void IdleState();
-		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void WalkingState();
-		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AttackState(float AttackTime, bool AttackDown);
-		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AbilityStart();
-		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AbilityState(float AbilityTime, bool AbilityDown);
-		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AbilityEnd();
-		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AnimationFinished();
+		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void IdleState(); // Idle state event.
+		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void WalkingState(); // Walking state event.
+		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AttackState(float AttackTime, bool AttackDown); // Attack state event.
+		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AbilityStart(); // Ability started event.
+		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AbilityState(float AbilityTime, bool AbilityDown); // Ability state event.
+		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AbilityEnd(); // Ability finished event.
+		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AnimationFinished(); // Animation finished event.
 
 	protected:
 		// Properties
-		UPROPERTY(VisibleAnywhere, Category="Arena Character|State") bool bIsMoving = false;
-		UPROPERTY(VisibleAnywhere, Category="Arena Character|State") bool bIsAttacking = false;
-		UPROPERTY(VisibleAnywhere, Category="Arena Character|State") bool bIsAbility = false;
-		UPROPERTY(VisibleAnywhere, Category="Arena Character|State") TMap<TEnumAsByte<Direction>, FDateTime> MoveInputMap;
+		UPROPERTY(VisibleAnywhere, Category="Arena Character|State") bool bIsMoving = false; // Is the character moving.
+		UPROPERTY(VisibleAnywhere, Category="Arena Character|State") bool bIsAttacking = false; // Is the character attacking.
+		UPROPERTY(VisibleAnywhere, Category="Arena Character|State") bool bIsAbility = false; // Is the character using an ability.
+		UPROPERTY(VisibleAnywhere, Category="Arena Character|State") TMap<TEnumAsByte<Direction>, FDateTime> MoveInputMap; // Input map for movement, keeps track of when button were pressed.
 
-		Direction MoveDirection = South;
-		FDateTime attackDownTime = -1;
-		bool attackKeyDown = 0;
-		bool attackStarted = false;
-		FDateTime abilityDownTime = -1;
-		FDateTime abilityCooldownTime = -1;
-		bool abilityKeyDown = 0;
-		FVector& Velocity = GetCharacterMovement()->Velocity;
+		Direction MoveDirection = South; // The characters current movement direction.
+		FDateTime attackDownTime = -1; // The time the attack key was pressed.
+		bool attackKeyDown = false; // Whether the attack key is down.
+		bool attackStarted = false; // Whether the attack has started yet.
+		FDateTime abilityDownTime = -1; // The time the ability key was pressed.
+		FDateTime abilityCooldownTime = -1; // The time the ability was last used.
+		bool abilityKeyDown = false; // Whether the ability key is down.
+		FVector& Velocity = GetCharacterMovement()->Velocity; // Reference to character movement velocity.
 
 		// Functions
 		void UpdateFacing();

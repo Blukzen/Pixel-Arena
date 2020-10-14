@@ -137,6 +137,14 @@ void AArenaCharacter::ResetInput()
 }
 
 /**
+ * Resets the character ability cooldown
+ */
+void AArenaCharacter::ResetCooldown()
+{
+    abilityCooldownTime = -1;
+}
+
+/**
  * Updates the movement map and decides whether the character is moving or not
  * @param direction Direction input to update.
  * @param keyDown Whether or not this directional key has been pressed.

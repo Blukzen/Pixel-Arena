@@ -52,15 +52,16 @@ class PIXELARENA_API AArenaCharacter : public AArenaActor
 		UPROPERTY(BlueprintReadWrite, Category = "Arena Character|Hit Boxes") TMap<TEnumAsByte<Direction>, UBoxComponent*> AttackBoxes;
 
 		// Functions
-		UFUNCTION(BlueprintCallable, Category="Arena Character") void Move();
-		UFUNCTION(BlueprintCallable, Category="Arena Character") void ApplyVelocity(float speed, Direction direction);
-		UFUNCTION(BlueprintCallable, Category="Arena Character") void SetVelocity(float speed, Direction direction);
-		UFUNCTION(BlueprintCallable, Category="Arena Character") void FinishAttack();
-		UFUNCTION(BlueprintCallable, Category="Arena Character") void FinishAbility();
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void Move();
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void ApplyVelocity(float speed, Direction direction);
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void SetVelocity(float speed, Direction direction);
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void FinishAttack();
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void FinishAbility();
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void SetHitbox(TEnumAsByte<Direction> direction, UBoxComponent* hitbox);
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void BeginAttack(TEnumAsByte<Direction> direction);
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void Attack(AArenaActor* other, int damageModifier);
 		UFUNCTION(BlueprintCallable, Category = "Arena Character") void ResetInput();
+		UFUNCTION(BlueprintCallable, Category = "Arena Character") void ResetCooldown();
 
 		// Events
 		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void IdleState();
@@ -70,6 +71,7 @@ class PIXELARENA_API AArenaCharacter : public AArenaActor
 		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AbilityState(float AbilityTime, bool AbilityDown);
 		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AbilityEnd();
 		UFUNCTION(BlueprintImplementableEvent, Category="Arena Character") void AnimationFinished();
+		
 
 	protected:
 		// Properties

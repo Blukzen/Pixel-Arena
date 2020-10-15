@@ -18,5 +18,5 @@ The game loop is as follows:
   Unzip the contents.
   Execute PixelArena.exe
   
-  **WARNING** There is a current bug where sometimes on class selection the game crashes.
+  **WARNING** There is a current bug where sometimes on class selection the game crashes. Running with administrator privelages seems to help in some cases.  
   Gameplay instructions are provided in game.

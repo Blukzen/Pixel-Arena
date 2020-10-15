@@ -3,6 +3,9 @@
 
 #include "LongrangeBoss.h"
 
+/**
+ * Teleports the boss to one of the teleport points based on whether he's at the center or not.
+ */
 void ALongrangeBoss::Teleport()
 {
     if (bAtCenter)
@@ -11,11 +14,14 @@ void ALongrangeBoss::Teleport()
         TeleportCenter();
 }
 
+/**
+ * Spawns in basic projectile and fires towards player.
+ */
 void ALongrangeBoss::BasicAttack()
 {
     AttackCount = AttackCount + 1;
+    
     UWorld* const World = GetWorld();
-
     if (World)
     {
         AArenaProjectile* projectile = World->SpawnActor<AArenaProjectile>(BasicProjectile);
@@ -24,6 +30,10 @@ void ALongrangeBoss::BasicAttack()
     }
 }
 
+
+/**
+ * Spawns in special projectile in a wave of 5 at varying angles.
+ */
 void ALongrangeBoss::SpecialAttack()
 {
     AttackCount = 5;
@@ -46,72 +56,87 @@ void ALongrangeBoss::SpecialAttack()
     }
 }
 
+/**
+ * Teleports the boss to the center spawn.
+ */
 void ALongrangeBoss::TeleportCenter()
 {
     bAtCenter = true;
     SetActorLocation(CenterSpawn->GetActorLocation());
 }
 
+/**
+ * Teleports the boss to a random corner spawn.
+ */
 void ALongrangeBoss::TeleportRandomCorner()
 {
     bAtCenter = false;
     SetActorLocation(CornerSpawns[FMath::RandRange(0, 3)]->GetActorLocation());
 }
 
+/**
+ * Called every frame
+ */
 void ALongrangeBoss::Tick(float DeltaSeconds)
 {
+    // Logic based on bosses current state.
     switch(CurrentState)
     {
-    case BossIdle:
-        if (HitCount >= 5)
-        {
-            HitCount = 0;
-            CurrentState = BossAbility;
+        // Boss idle state.
+        case BossIdle:
+            if (HitCount >= 5)
+            {
+                HitCount = 0;
+                CurrentState = BossAbility;
+                break;
+            }
+            if (bPlayerVisible && !bShouldTeleport)
+            {
+                CurrentState = BossAttacking;
+                break;
+            }
+                
+            IdleState();
             break;
-        }
-        if (bPlayerVisible && !bShouldTeleport)
-        {
-            CurrentState = BossAttacking;
+
+        // Boss attacking state.
+        case BossAttacking:
+            if (HitCount >= 5)
+            {
+                HitCount = 0;
+                CurrentState = BossAbility;
+                break;
+            }
+            if (!bPlayerVisible)
+            {
+                CurrentState = BossIdle;
+                break;
+            }
+            if (AttackCount >= 5)
+            {
+                AttackCount = 0;
+                bShouldTeleport = true;
+                CurrentState = BossIdle;
+                break;
+            }
+                
+            AttackState();
             break;
-        }
+
+        // Boss ability state.
+        case BossAbility:
+            if (bTeleported)
+            {
+                CanDamage = true;
+                bTeleported = false;
+                bTeleporting = false;
+                CurrentState = BossIdle;
+                break;
+            }
             
-        IdleState();
-        break;
-    case BossAttacking:
-        if (HitCount >= 5)
-        {
-            HitCount = 0;
-            CurrentState = BossAbility;
+            AbilityState();
             break;
-        }
-        if (!bPlayerVisible)
-        {
-            CurrentState = BossIdle;
+        default:
             break;
-        }
-        if (AttackCount >= 5)
-        {
-            AttackCount = 0;
-            bShouldTeleport = true;
-            CurrentState = BossIdle;
-            break;
-        }
-            
-        AttackState();
-        break;
-    case BossAbility:
-        if (bTeleported)
-        {
-            CanDamage = true;
-            bTeleported = false;
-            bTeleporting = false;
-            CurrentState = BossIdle;
-            break;
-        }
-        
-        AbilityState();
-        break;
-    default:
-        break;
     }
 }

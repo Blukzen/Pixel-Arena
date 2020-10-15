@@ -3,6 +3,10 @@
 
 #include "ArenaActor.h"
 
+/**
+ * Applies damage to the actors health if they can currently be damaged. Fires OnDamage blueprint event.
+ * @param amount The amount of damage to apply.
+ */
 void AArenaActor::Damage(int amount)
 {
 	if (CanDamage)
@@ -10,7 +14,6 @@ void AArenaActor::Damage(int amount)
 		Health -= amount;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 0.2f, FColor::Yellow, TEXT("HELLO"));
 	OnDamage(amount);
 }
 

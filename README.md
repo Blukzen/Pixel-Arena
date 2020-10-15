@@ -13,10 +13,6 @@ The game loop is as follows:
   
   All visual assets in the game were created by the design team.
   
-  ## Videos
-  [Code Documentation Video](https://drive.google.com/file/d/1shTOg_GiqQttlF_q_tjM9VOBBwwDSYCN/view?usp=sharing)  
-  [Gameplay Documentation Video](https://drive.google.com/file/d/15ik_wxhCs4urbQiylHpfFb8gS0wkSaXQ/view?usp=sharing)  
-  
   ## Installation
   Download the latest release from [Releases](https://github.com/Blukzen/Pixel-Arena/releases).
   Unzip the contents.
